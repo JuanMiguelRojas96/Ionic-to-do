@@ -10,11 +10,32 @@ export class DeseosService {
 
   constructor() {
 
-    const lista1 = new Lista('Recolectar piedras');
-    const lista2 = new Lista('Heroes a desaparecer');
+    this.cargarStorage();
+  }
 
-    this.listas.push(lista1, lista2);
+  crearLista( titulo: string ) {
 
+    const nuevaLista = new Lista(titulo);
+
+    this.listas.push(nuevaLista);
+    this.guardarStorage();
+
+    return nuevaLista.id;
+  
+  }
+
+  guardarStorage() {
+
+    localStorage.setItem('data', JSON.stringify(this.listas));
+  }
+
+  cargarStorage() {
+    const data = localStorage.getItem('data');
+    if (data) {
+      this.listas = JSON.parse(data);
+    } else {
+      this.listas = [];
+    }
   }
 
 
